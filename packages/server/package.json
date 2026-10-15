@@ -1,0 +1,24 @@
+{
+  "name": "@games/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Общий бэкенд TG Games: бот, API, лидерборды, рефералки, платежи Stars",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "better-sqlite3": "^11.8.1",
+    "grammy": "^1.34.0",
+    "hono": "^4.6.16"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "~5.6.2"
+  }
+}

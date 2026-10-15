@@ -1,0 +1,205 @@
+.gx {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: calc(12px + var(--safe-top)) 14px calc(14px + var(--safe-bottom));
+  gap: 10px;
+}
+.gx__top,
+.gx__field,
+.gx__hint {
+  position: relative;
+  z-index: 1;
+}
+
+.gx__top {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.gx__icon {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  background: var(--bg-elev);
+  color: var(--fg);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.gx__score { text-align: center; }
+.gx__score-val { font-family: var(--font-display); font-size: 25px; font-weight: 700; line-height: 1; }
+.gx__combo {
+  font-size: 15px;
+  color: #ffce4c;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.gx__best { font-size: 12px; color: var(--fg-dim); margin-top: 2px; }
+.gx__next {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: var(--bg-elev);
+  border-radius: 12px;
+  padding: 6px 10px;
+}
+.gx__next-label { font-size: 10px; color: var(--fg-dim); text-transform: uppercase; }
+
+.gx__field {
+  flex: 1;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  touch-action: none;
+  border: 1px solid var(--line);
+  background: url('/assets/bg-field.png') center / cover no-repeat #0a0c18;
+  box-shadow: inset 0 0 44px rgba(0, 0, 0, 0.55);
+}
+.gx__canvas { display: block; width: 100%; height: 100%; }
+
+.gx__over {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 12, 30, 0.78);
+  backdrop-filter: blur(4px);
+  padding: 20px;
+}
+.gx__over-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 320px;
+  background: var(--bg-elev);
+  border-radius: 22px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: gx-pop 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+.gx__record {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffce4c;
+}
+.gx__over-title { font-family: var(--font-display); font-size: 20px; font-weight: 800; }
+.gx__over-score {
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+.gx__over-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+.gx__over-actions .btn { flex: 1; }
+/* revive — главная (акцентная) кнопка карточки, «толстая» с офсет-тенью */
+.gx__revive {
+  width: 100%;
+  margin-top: 8px;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-ink);
+  background: var(--accent);
+  box-shadow: 0 4px 0 var(--accent-shadow);
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.06s ease;
+}
+.gx__revive:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--accent-shadow);
+}
+.gx__revive:disabled {
+  opacity: 0.55;
+  box-shadow: none;
+  transform: none;
+  cursor: default;
+}
+.gx__stock {
+  font-size: 12px;
+  color: var(--fg-dim);
+}
+
+/* празднование нового тира: вспышка + плашка */
+.gx__flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(80% 60% at 50% 40%, rgba(255, 255, 255, 0.9), transparent 70%);
+  animation: gx-flash 0.7s ease-out both;
+  pointer-events: none;
+  z-index: 2;
+}
+.gx__newtier {
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(23, 18, 30, 0.92);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 16px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+  pointer-events: none;
+  z-index: 3;
+  animation: gx-newtier 2.2s ease both;
+}
+@keyframes gx-flash {
+  from { opacity: 0.55; }
+  to { opacity: 0; }
+}
+@keyframes gx-newtier {
+  0% { opacity: 0; transform: translate(-50%, 14px) scale(0.9); }
+  12%, 85% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -10px) scale(0.96); }
+}
+
+.gx__hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--fg-dim);
+}
+
+.gx__toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + var(--safe-bottom));
+  transform: translate(-50%, 20px);
+  background: rgba(23, 27, 34, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+}
+.gx__toast--show { opacity: 1; transform: translate(-50%, 0); }
+
+@keyframes gx-pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

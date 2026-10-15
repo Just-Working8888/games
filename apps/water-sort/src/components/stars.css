@@ -1,0 +1,23 @@
+.stars {
+  display: flex;
+  gap: 6px;
+  line-height: 1;
+}
+.star {
+  display: inline-block;
+  transform: scale(0);
+}
+.star--on {
+  color: #ffce4c;
+  text-shadow: 0 0 12px rgba(255, 206, 76, 0.7);
+  animation: star-pop 0.5s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.star--off {
+  color: rgba(255, 255, 255, 0.14);
+  transform: scale(1);
+}
+@keyframes star-pop {
+  0% { transform: scale(0) rotate(-40deg); }
+  70% { transform: scale(1.25) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}

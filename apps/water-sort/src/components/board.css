@@ -1,0 +1,32 @@
+.board {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 26px 6px;
+  padding: 8px 0;
+}
+
+.board__stream {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.board__stream-path {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px currentColor);
+  animation: stream-flow 0.44s ease-out both;
+}
+
+@keyframes stream-flow {
+  0% { opacity: 0; stroke-dasharray: 0 200; }
+  25% { opacity: 0.95; stroke-dasharray: 60 200; }
+  80% { opacity: 0.95; }
+  100% { opacity: 0; stroke-dasharray: 200 0; }
+}

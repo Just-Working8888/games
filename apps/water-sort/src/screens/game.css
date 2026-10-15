@@ -1,0 +1,207 @@
+/* Экран игры в стиле классического Water Sort: ночная сцена,
+   периваловые кнопки-таблетки с офсет-тенью, бутылки в две строки. */
+.game {
+  --btn: #7b86e0; /* перивал */
+  --btn-sh: #4a54a8; /* тень-подложка */
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: calc(12px + var(--safe-top)) 14px calc(18px + var(--safe-bottom));
+  gap: 8px;
+}
+
+.game__top,
+.game__row2,
+.game__controls,
+.game__hintbar {
+  position: relative;
+  z-index: 1;
+}
+.board {
+  z-index: 1;
+}
+
+.game__top {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.game__meta { text-align: center; }
+.game__level {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #eef1ff;
+  text-shadow: 0 2px 0 rgba(10, 12, 30, 0.6);
+}
+.game__moves { font-size: 11px; color: #8f97c4; margin-top: 2px; }
+
+/* круглая «клавиша» — общий стиль кнопок экрана */
+.game__icon,
+.game__cal,
+.ctl {
+  border: none;
+  border-radius: 16px;
+  background: var(--btn);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 0 var(--btn-sh);
+  transition: transform 0.07s ease, box-shadow 0.07s ease, opacity 0.2s ease;
+}
+.game__icon:active,
+.game__cal:active,
+.ctl:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--btn-sh);
+}
+
+.game__icon {
+  width: 46px;
+  height: 46px;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+  padding-bottom: 2px;
+}
+
+.game__coins {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: var(--btn);
+  color: #fff;
+  border-radius: 16px;
+  padding: 0 12px;
+  height: 46px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--btn-sh);
+  transition: transform 0.07s ease, box-shadow 0.07s ease;
+}
+.game__coins:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--btn-sh); }
+.game__coins-plus {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--btn-sh);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* вторая строка: календарь ежедневки, как в референсе */
+.game__row2 {
+  display: flex;
+  margin-top: -2px;
+}
+.game__cal {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+}
+.game__cal svg { width: 22px; height: 22px; }
+
+.game__hintbar {
+  text-align: center;
+  font-size: 13px;
+  color: #ff8e94;
+}
+
+/* нижний ряд круглых иконок */
+.game__controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding-bottom: 4px;
+}
+.ctl {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  flex: none;
+}
+.ctl:disabled { opacity: 0.45; }
+.ctl:disabled:active { transform: none; box-shadow: 0 4px 0 var(--btn-sh); }
+.ctl__icon {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+.ctl__icon svg { width: 24px; height: 24px; display: block; }
+/* бейдж-кружок: счётчик бесплатных отмен или цена */
+.ctl__badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 11px;
+  background: #f0f3ff;
+  color: #3a4390;
+  font-size: 11px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 0 rgba(20, 23, 46, 0.35);
+  white-space: nowrap;
+}
+
+.game__win {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 14, 30, 0.72);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+  padding: 24px;
+}
+.game__win-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  background: #2b2f55;
+  border: 1px solid rgba(170, 182, 234, 0.25);
+  border-radius: 22px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: win-pop 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+.game__win-title { font-family: var(--font-display); font-size: 20px; font-weight: 800; color: #eef1ff; }
+.game__win-sub { font-size: 14px; color: #a9b0d8; }
+.game__reward { color: #f4c95a; font-weight: 700; }
+.game__win-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+.game__win-actions .btn { flex: 1; }
+
+@keyframes win-pop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

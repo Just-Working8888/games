@@ -1,0 +1,25 @@
+{
+  "name": "tg-games",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Каталог игр для Telegram Mini Apps: общий шелл + игровые ядра",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:sort": "npm run dev -w water-sort",
+    "dev:galaxy": "npm run dev -w galaxy",
+    "dev:snowball": "npm run dev -w snowball",
+    "dev:server": "npm run dev -w @games/server",
+    "build:sort": "npm run build -w water-sort",
+    "build:galaxy": "npm run build -w galaxy",
+    "build:snowball": "npm run build -w snowball",
+    "typecheck": "tsc --noEmit -p apps/water-sort && tsc --noEmit -p apps/galaxy && tsc --noEmit -p apps/snowball && npm run typecheck -w @games/server",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1",
+    "vitest": "^3.2.7"
+  }
+}

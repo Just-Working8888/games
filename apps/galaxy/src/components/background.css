@@ -1,0 +1,67 @@
+/* Глубокий космос: индиго-градиент, статичные звёзды (box-shadow-списки),
+   туманности и виньетка. Звёзды позиционируются в vw/vh — тянутся на любой экран. */
+.bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: url('/assets/bg-app.png') center top / cover no-repeat;
+}
+/* виньетка по краям — сцена «уходит в темноту» */
+.bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 140px rgba(5, 6, 16, 0.7);
+}
+
+/* ── туманности: мягкие цветные пятна, едва заметные ── */
+.bg__nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0.12;
+}
+.bg__nebula--violet {
+  top: 6%;
+  left: -22%;
+  width: 78vw;
+  height: 60vw;
+  background: radial-gradient(ellipse at 60% 45%, #a06bff 0%, transparent 65%);
+}
+.bg__nebula--cyan {
+  bottom: 8%;
+  right: -25%;
+  width: 82vw;
+  height: 64vw;
+  background: radial-gradient(ellipse at 40% 55%, #4ce0d5 0%, transparent 65%);
+}
+
+/* звёздное поле — теперь в bg-app.png; спаны оставлены в DOM, но не рендерят ничего */
+.bg__stars { display: none; }
+
+/* ── редкая падающая звезда: короткий росчерк раз в ~8 секунд ── */
+.bg__shooting {
+  position: absolute;
+  top: 12%;
+  left: 72%;
+  width: 90px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(240, 244, 255, 0.9), transparent 80%);
+  transform: rotate(150deg);
+  opacity: 0;
+  animation: bg-shoot 8.5s linear infinite;
+}
+@keyframes bg-shoot {
+  0% { opacity: 0; transform: rotate(150deg) translateX(0); }
+  1.5% { opacity: 0.9; }
+  6% { opacity: 0; transform: rotate(150deg) translateX(180px); }
+  100% { opacity: 0; transform: rotate(150deg) translateX(180px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg__stars,
+  .bg__shooting { animation: none; }
+}

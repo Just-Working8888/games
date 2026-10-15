@@ -1,0 +1,158 @@
+/* Модалка магазина — стиль «Печатной аркады»: карточка, толстые ряды, офсет-тени. */
+.shop {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(23, 18, 30, 0.72);
+  backdrop-filter: blur(4px);
+  animation: shop-fade 0.2s ease both;
+}
+.shop__card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-soft);
+  animation: shop-pop 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+.shop__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.shop__title {
+  flex: 1;
+  font-size: 20px;
+}
+.shop__balance {
+  font-weight: 700;
+  font-size: 14px;
+  background: var(--bg-3);
+  border-radius: 10px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.shop__close {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 10px;
+  background: var(--bg-3);
+  color: var(--fg-dim);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.shop__packs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.shop__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg-3);
+  color: var(--fg);
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  transition: transform 0.08s ease, opacity 0.2s ease;
+}
+.shop__row:active { transform: scale(0.98); }
+.shop__row:disabled { opacity: 0.55; cursor: default; }
+.shop__row--owned { cursor: default; }
+
+.shop__icon { font-size: 24px; }
+.shop__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.shop__name {
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.shop__sub { font-size: 12px; color: var(--fg-dim); }
+.shop__tag {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 6px;
+  border-radius: 7px;
+  background: var(--jade);
+  color: var(--accent-ink);
+}
+.shop__price {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent-ink);
+  background: var(--accent);
+  box-shadow: 0 3px 0 var(--accent-shadow);
+  border-radius: 10px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  min-width: 58px;
+  text-align: center;
+}
+.shop__price--busy { animation: shop-pulse 0.9s ease-in-out infinite; }
+.shop__owned {
+  font-weight: 800;
+  color: var(--jade);
+  font-size: 18px;
+}
+
+.shop__invite {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 1px dashed rgba(94, 207, 160, 0.5);
+  border-radius: var(--radius-sm);
+  background: rgba(94, 207, 160, 0.08);
+  color: var(--fg);
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-body);
+  transition: transform 0.08s ease;
+}
+.shop__invite:active { transform: scale(0.98); }
+.shop__invite-cta {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--jade);
+  white-space: nowrap;
+}
+
+@keyframes shop-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes shop-pop {
+  from { transform: scale(0.9) translateY(12px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes shop-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}

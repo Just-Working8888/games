@@ -1,0 +1,152 @@
+/* Бутылка-«молочка» в стиле классического Water Sort:
+   светлый периваловый контур, плоские цветные слои, тёмная ночная сцена. */
+.tube {
+  background: none;
+  border: none;
+  padding: 4px 1px;
+  cursor: pointer;
+  position: relative;
+}
+
+.tube__glass {
+  position: relative;
+  width: 60px;
+  height: 168px;
+  transition: transform 0.16s ease, filter 0.2s ease;
+  transform-origin: 50% 92%;
+}
+
+.tube__outline {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  z-index: 2;
+  pointer-events: none;
+}
+.tube__lip {
+  fill: rgba(20, 23, 46, 0.9);
+  stroke: #aab6ea;
+  stroke-width: 2.5;
+}
+.tube__body {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: #aab6ea;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  transition: stroke 0.2s ease;
+}
+
+/* жидкость живёт в теле бутылки (ниже плеч), слои плоские */
+.tube__liquid {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 56px;
+  bottom: 9px;
+  border-radius: 3px 3px 13px 13px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.tube--selected .tube__glass {
+  transform: translateY(-12px);
+}
+.tube--selected .tube__body,
+.tube--selected .tube__lip {
+  stroke: #f0f3ff;
+  filter: drop-shadow(0 0 6px rgba(170, 182, 234, 0.7));
+}
+
+.tube--complete .tube__glass {
+  animation: tube-pop 0.4s ease;
+}
+.tube--complete .tube__body {
+  stroke: #7ee2a0;
+}
+/* блик-свип по завершённой бутылке */
+.tube--complete .tube__liquid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: shine-sweep 0.7s ease 0.05s;
+  pointer-events: none;
+}
+
+.tube--hint-from .tube__glass { animation: hint-pulse 0.9s ease-in-out infinite; }
+.tube--hint-from .tube__body { stroke: #f4b13a; }
+.tube--hint-to .tube__glass { animation: hint-pulse 0.9s ease-in-out infinite; }
+.tube--hint-to .tube__body { stroke: #7ee2a0; }
+
+/* наклон-перелив источника */
+.tube--tilt-left .tube__glass { animation: tilt-left 0.46s ease-in-out; z-index: 5; }
+.tube--tilt-right .tube__glass { animation: tilt-right 0.46s ease-in-out; z-index: 5; }
+
+.tube__cap {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 800;
+  color: #7ee2a0;
+  z-index: 4;
+}
+
+/* плоский слой жидкости — как в референсе, без градиентов и мениска */
+.cell {
+  height: 25%;
+  flex: none;
+  background: var(--c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.15s ease;
+}
+.cell--empty { background: transparent; }
+.cell--surface { border-radius: 2px 2px 0 0; }
+.cell--bottom { border-radius: 0 0 12px 12px; }
+
+.cell__sym { font-size: 14px; color: rgba(0, 0, 0, 0.35); z-index: 1; }
+
+.cell--lifted { transform: translateY(-5px); }
+.cell--entering { animation: pour-in 0.32s cubic-bezier(0.3, 1.4, 0.5, 1) both; transform-origin: top; }
+.cell--leaving { animation: pour-out 0.34s ease-in both; transform-origin: top; }
+
+@keyframes pour-in {
+  0% { transform: translateY(-20px) scaleY(0.15); opacity: 0; }
+  70% { transform: translateY(0) scaleY(1.12); opacity: 1; }
+  100% { transform: translateY(0) scaleY(1); }
+}
+@keyframes pour-out {
+  from { transform: translateY(0) scaleY(1); opacity: 1; }
+  to { transform: translateY(-18px) scaleY(0.15); opacity: 0; }
+}
+@keyframes tube-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+@keyframes shine-sweep {
+  to { transform: translateX(120%); }
+}
+@keyframes hint-pulse {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5)); }
+}
+@keyframes tilt-left {
+  0% { transform: translateY(0) rotate(0); }
+  28% { transform: translateY(-46px) rotate(-26deg); }
+  72% { transform: translateY(-46px) rotate(-26deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+@keyframes tilt-right {
+  0% { transform: translateY(0) rotate(0); }
+  28% { transform: translateY(-46px) rotate(26deg); }
+  72% { transform: translateY(-46px) rotate(26deg); }
+  100% { transform: translateY(0) rotate(0); }
+}

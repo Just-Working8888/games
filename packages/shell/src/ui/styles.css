@@ -1,0 +1,138 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Дизайн-система «Печатная аркада»
+   Тёплый чернильно-сливовый мир, кремовая бумага, характерный дисплейный
+   шрифт, «толстые» кнопки с офсет-тенью, зерно и виньетка. Анти-AI.
+   ───────────────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Onest:wght@400;500;600;700&display=swap');
+
+:root {
+  /* поверхности */
+  --bg: #17121e;
+  --bg-elev: #221a2c;
+  --bg-3: #2c2138;
+  --fg: #f4ead6;
+  --fg-dim: #a596a6;
+  --line: rgba(244, 234, 214, 0.1);
+
+  /* акценты */
+  --accent: #f4b13a; /* маригольд */
+  --accent-ink: #2a1c06; /* тёмный текст на маригольде */
+  --accent-shadow: #a9781f;
+  --accent-2: #ff6a5a; /* корал */
+  --jade: #5ecfa0;
+  --sky: #59aee0;
+  --danger: #ff5d63;
+
+  --radius: 18px;
+  --radius-sm: 12px;
+
+  --font-display: 'Unbounded', system-ui, sans-serif;
+  --font-body: 'Onest', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --shadow-soft: 0 18px 44px rgba(0, 0, 0, 0.5);
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  height: 100%;
+  color: var(--fg);
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  overscroll-behavior: none;
+}
+
+body {
+  background:
+    radial-gradient(120% 80% at 50% -10%, #2a1d38 0%, transparent 55%),
+    radial-gradient(100% 70% at 100% 110%, #201430 0%, transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* зерно поверх всего — «печатная» текстура */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.screen {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: calc(16px + var(--safe-top)) 16px calc(16px + var(--safe-bottom));
+  gap: 16px;
+}
+.screen__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.screen__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* «толстая» кнопка-клавиша */
+.btn {
+  appearance: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--accent-ink);
+  background: var(--accent);
+  box-shadow: 0 4px 0 var(--accent-shadow);
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.06s ease, filter 0.2s ease;
+}
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--accent-shadow);
+}
+.btn--ghost {
+  background: var(--bg-elev);
+  color: var(--fg);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+.btn--ghost:active { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35); }
+.btn--danger {
+  background: var(--danger);
+  color: #fff;
+  box-shadow: 0 4px 0 #a83840;
+}
+.btn:disabled { opacity: 0.45; box-shadow: none; transform: none; cursor: default; }
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.badge {
+  font-size: 13px;
+  color: var(--fg-dim);
+}

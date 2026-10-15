@@ -1,0 +1,243 @@
+/* Меню «ночного» Water Sort: минимум контейнеров, сцена — герой, один акцент.
+   Бутылки стоят на земле с тенями, действия — крупная клавиша + два тайла,
+   настройки — маленькие круглые кнопки в углу. */
+.menu {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: calc(14px + var(--safe-top)) 18px calc(16px + var(--safe-bottom));
+}
+.menu > *:not(.bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── верхняя строка: лёгкие чипы + монеты ── */
+.menu__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.menu__chips {
+  display: flex;
+  gap: 6px;
+}
+.menu__chip {
+  font-size: 12px;
+  font-weight: 700;
+  color: #b9c0e8;
+  background: rgba(43, 47, 85, 0.55);
+  border: 1px solid rgba(170, 182, 234, 0.18);
+  padding: 6px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.menu__chip--stars { color: #f4c95a; }
+
+.menu__coins {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 15px;
+  padding: 0 12px;
+  height: 42px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--accent-shadow);
+  transition: transform 0.07s ease, box-shadow 0.07s ease;
+}
+.menu__coins:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--accent-shadow); }
+.menu__coins-vip {
+  font-size: 11px;
+  font-weight: 800;
+  color: #f4c95a;
+}
+.menu__coins-plus {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--accent-shadow);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ── заголовок ── */
+.menu__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 26px;
+}
+.menu__title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #eef1ff;
+  text-shadow: 0 2px 0 rgba(10, 12, 30, 0.6);
+}
+.menu__tagline { margin: 0; color: #9aa1c9; font-size: 14px; }
+
+/* ── сцена: бутылки на земле ── */
+.menu__scene {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  min-height: 190px;
+  padding-bottom: 10px;
+}
+.menu__bwrap {
+  position: relative;
+  display: block;
+  animation: menu-float 3.4s ease-in-out infinite;
+}
+/* тень-эллипс под бутылкой — «стоит на земле» */
+.menu__bwrap::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 74%;
+  height: 12px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(8, 9, 22, 0.55) 0%, transparent 70%);
+}
+/* разнобой: масштаб, лёгкие наклоны, фазы покачивания */
+.menu__bwrap--1 { animation-delay: 0.2s; }
+.menu__bwrap--1 .menu__bottle { width: 53px; height: 148px; }
+.menu__bwrap--2 { animation-delay: 0.9s; margin-bottom: 2px; }
+.menu__bwrap--2 .menu__bottle { width: 64px; height: 179px; }
+.menu__bwrap--3 {
+  animation-delay: 0.5s;
+  --tilt: -8deg;
+  transform: rotate(var(--tilt));
+  margin: 0 3px 7px;
+}
+.menu__bwrap--3 .menu__bottle { width: 57px; height: 160px; }
+.menu__bwrap--4 { animation-delay: 1.3s; }
+.menu__bwrap--4 .menu__bottle { width: 48px; height: 134px; }
+
+.menu__bottle { display: block; }
+.menu__bottle-lip {
+  fill: rgba(20, 23, 46, 0.9);
+  stroke: #aab6ea;
+  stroke-width: 2.5;
+}
+.menu__bottle-body {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: #aab6ea;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+/* ── действия ── */
+.menu__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.menu__play {
+  width: 100%;
+  max-width: 320px;
+  font-size: 19px;
+  padding: 18px;
+  border-radius: 18px;
+}
+
+.menu__tiles {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 320px;
+}
+.menu__tile {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 86px;
+  border: none;
+  border-radius: 18px;
+  background: rgba(43, 47, 85, 0.85);
+  border: 1px solid rgba(170, 182, 234, 0.2);
+  color: #dfe4ff;
+  cursor: pointer;
+  transition: transform 0.07s ease;
+}
+.menu__tile:active { transform: translateY(2px); }
+.menu__tile-icon { width: 30px; height: 30px; }
+.menu__tile-label { font-size: 12px; font-weight: 700; color: #b9c0e8; }
+.menu__tile-badge {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #2a1c06;
+  background: #f4c95a;
+  box-shadow: 0 2px 0 #a9781f;
+  padding: 3px 7px;
+  border-radius: 999px;
+}
+.menu__tile-done {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #7ee2a0;
+}
+
+/* ── настройки в углу ── */
+/* специфичность выше, чем у `.menu > *:not(.bg)`, иначе absolute перебивается */
+.menu > .menu__corner {
+  /* справа от сцены, выше блока действий — не пересекается с тайлами */
+  position: absolute;
+  right: 14px;
+  bottom: calc(200px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2;
+}
+.menu__round {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(170, 182, 234, 0.25);
+  border-radius: 50%;
+  background: rgba(43, 47, 85, 0.75);
+  color: #dfe4ff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.07s ease, opacity 0.2s ease;
+}
+.menu__round:active { transform: scale(0.92); }
+.menu__round--off { opacity: 0.45; }
+.menu__round svg { width: 20px; height: 20px; }
+
+@keyframes menu-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-6px) rotate(var(--tilt, 0deg)); }
+}
